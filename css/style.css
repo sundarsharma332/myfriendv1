@@ -1,0 +1,246 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 600px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding: 20px 10px 10px 10px;
+    box-sizing: border-box;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin-top: 20px;
+    /* Added margin-top */
+}
+
+.chat-container::-webkit-scrollbar {
+    display: none;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.search-container textarea {
+    width: 100%;
+    padding: 10px 70px 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    font-size: 16px;
+    resize: none;
+    overflow: hidden;
+    box-sizing: border-box;
+    height: 52px;
+    min-height: 52px;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.search-container textarea::placeholder {
+    text-align: left;
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+}
+
+.search-container textarea:focus {
+    border-color: #673AB7;
+}
+
+.search-container button {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #673AB7;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    height: 44px;
+    width: 44px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-container button.visible {
+    display: flex;
+}
+
+.search-container button:hover {
+    background-color: #5E35B1;
+}
+
+.floating-circle {
+    position: fixed;
+    bottom: 20px;
+    background-color: #673AB7;
+    color: white;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5000;
+}
+
+.floating-circle:hover {
+    background-color: #5E35B1;
+}
+
+.new-chat-circle {
+    left: 20px;
+}
+
+.toggle-sidebar-circle {
+    right: 20px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 300px;
+    height: 100%;
+    background-color: white;
+    color: #333;
+    padding: 20px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px 0 0 10px;
+    transition: right 0.3s ease;
+    z-index: 2500;
+    overflow-y: auto;
+}
+
+.sidebar.open {
+    right: 0;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #673AB7;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+}
+
+.history-item-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #673AB7;
+}
+
+.history-item-timestamp {
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 3px;
+}
+
+.chat-bubble {
+    max-width: 70%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.chat-bubble.question {
+    align-self: flex-end;
+    background-color: #673AB7;
+    color: white;
+    border-top-right-radius: 0;
+}
+
+.chat-bubble.answer {
+    align-self: flex-start;
+    background-color: #f1f1f1;
+    color: #333;
+    border-top-left-radius: 0;
+}
+
+.chat-timestamp {
+    font-size: 10px;
+    color: #888;
+    margin-top: 5px;
+}
+
+.loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    margin: 0 3px;
+    background-color: #333;
+    border-radius: 50%;
+    display: inline-block;
+    animation: dot-blink 1.4s infinite both;
+}
+
+.dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes dot-blink {
+
+    0%,
+    80%,
+    100% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+}
+
+.empty-chat-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: #ccc;
+    opacity: 0.5;
+}
