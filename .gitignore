@@ -1,3 +1,35 @@
-.vscode/
-.history/
+# Ignore Node.js project files
+node_modules/
+
+# Ignore environment variables file
 .env
+
+# Ignore VSCode settings
+.vscode/
+
+# Ignore local history files
+.history/
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore log files
+*.log
+
+# Ignore IDE-specific files
+*.idea/
+*.iml
+
+# Ignore build output
+dist/
+build/
+
+# Ignore any local configuration files
+*.local
+
+# Ignore any temporary files
+*.tmp
+*.swp
+
+# Ignore any backup files
+*~
