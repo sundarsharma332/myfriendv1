@@ -108,7 +108,7 @@ button.addEventListener('click', function () {
         }));
 
         // Send message to server via API
-        fetch('http://localhost:4000/api/message', {
+        fetch('https://myfriendv1ws.vercel.app/api/message', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
