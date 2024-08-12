@@ -1,4 +1,6 @@
-const socket = io('http://localhost:4000/');
+// const socket = io('http://localhost:4000/');
+
+const socket = io('https://myfriendv1ws.vercel.app');
 
 const textarea = document.getElementById('search-input');
 const button = document.getElementById('send-button');
