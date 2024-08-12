@@ -1,10 +1,3 @@
-const socket = io('http://localhost:4000/', {
-    reconnection: false
-});
-
-// const socket = io('https://myfriendv1ws.vercel.app');
-
-
 const textarea = document.getElementById('search-input');
 const button = document.getElementById('send-button');
 const sidebar = document.getElementById('sidebar');
@@ -19,6 +12,7 @@ let currentSessionId = null;
 let messages = []; // Store chat history
 let isThinking = false; // Flag to indicate if the AI is thinking
 
+// Change placeholder text periodically
 function changePlaceholder() {
     textarea.placeholder = placeholders[placeholderIndex];
     placeholderIndex = (placeholderIndex + 1) % placeholders.length;
@@ -91,7 +85,7 @@ button.addEventListener('click', function () {
         const timestamp = new Date().toLocaleString();
 
         const newMessage = {
-            role: 'user',
+            role: 'user', // Ensure the 'role' field is included
             content: question,
             timestamp: timestamp
         };
@@ -106,11 +100,46 @@ button.addEventListener('click', function () {
 
         scrollToBottom();
 
-        // Send message to server
-        socket.emit('message', {
-            message: newMessage,
-            history: messages
-        });
+        // Ensure each message in history has both 'content' and 'role'
+        const formattedMessages = messages.map(msg => ({
+            content: msg.content,
+            role: msg.role === 'ai' ? 'assistant' : msg.role, // Map 'ai' to 'assistant'
+            timestamp: msg.timestamp
+        }));
+
+        // Send message to server via API
+        fetch('http://localhost:4000/api/message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: {
+                    content: newMessage.content,
+                    role: newMessage.role
+                },
+                history: formattedMessages
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                removeLoadingIndicator();
+                const response = data.response; // Match with server's response structure
+                const timestamp = new Date().toLocaleString();
+                addChatBubble(response, 'answer', timestamp);
+                updateSession(newMessage.content, response, timestamp);
+                scrollToBottom();
+            })
+            .catch(error => {
+                console.error('Error communicating with the server:', error);
+                removeLoadingIndicator();
+                addChatBubble('Error communicating with the server.', 'system', new Date().toLocaleString());
+            });
     }
 });
 
@@ -250,39 +279,3 @@ function updateEmptyChatBackground() {
 
 // Initialize the chat and history when the page loads
 initializeFromLocalStorage();
-
-// Socket.IO event listeners
-socket.on('connect', () => {
-    console.log('Connected to the server');
-});
-
-socket.on('disconnect', () => {
-    console.log('Disconnected from the server');
-    addChatBubble('Disconnected from server', 'system', new Date().toLocaleString());
-});
-
-socket.on('connect_error', (err) => {
-    console.log('Connection Error:', err);
-    addChatBubble(`Connection error - ${err}`, 'system', new Date().toLocaleString());
-});
-
-socket.on('error', (err) => {
-    console.log('Error:', err);
-    addChatBubble(`Error - ${err}`, 'system', new Date().toLocaleString());
-});
-
-socket.on('response', (data) => {
-    removeLoadingIndicator();
-    const response = data;
-    const timestamp = new Date().toLocaleString();
-    addChatBubble(response, 'answer', timestamp);
-    updateSession(messages[messages.length - 1].content, response, timestamp);
-    scrollToBottom();
-});
-
-socket.on('getMessageEvent', (data) => {
-    console.log('New message received:', data);
-    const timestamp = new Date().toLocaleString();
-    addChatBubble(data, 'assistant', timestamp);
-    scrollToBottom();
-});
