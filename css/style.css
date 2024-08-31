@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+
 body {
     margin: 0;
     padding: 0;
@@ -6,24 +9,22 @@ body {
     flex-direction: column;
     align-items: center;
     background-color: #f4f4f4;
-    font-family: Arial, sans-serif;
+    font-family: "Source Code Pro", monospace;
     overflow: hidden;
 }
 
 .chat-container {
-    width: 100%;
-    max-width: 600px;
+    width: 60%;
+    margin: 0 auto;
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    margin-bottom: 10px;
     padding: 20px 10px 10px 10px;
     box-sizing: border-box;
     scrollbar-width: none;
     -ms-overflow-style: none;
     margin-top: 20px;
-    /* Added margin-top */
 }
 
 .chat-container::-webkit-scrollbar {
@@ -33,7 +34,7 @@ body {
 .search-container {
     position: relative;
     width: 100%;
-    max-width: 600px;
+    max-width: 900px;
     margin-bottom: 20px;
     padding: 0 10px;
     box-sizing: border-box;
@@ -170,11 +171,15 @@ body {
 }
 
 .chat-bubble {
-    max-width: 70%;
+    max-width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 15px;
     position: relative;
+    word-wrap: break-word;
+    /* Ensure long words wrap correctly */
+    white-space: pre-line;
+    /* Preserve formatting for text, including line breaks */
 }
 
 .chat-bubble.question {
@@ -243,4 +248,24 @@ body {
     font-size: 48px;
     color: #ccc;
     opacity: 0.5;
+}
+
+pre {
+    background-color: black;
+    /* Light gray background */
+    color: #ffffff;
+    /* Dark text color */
+    padding: 20px;
+    border-radius: 5px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    /* Wrap code lines if necessary */
+    font-family: "Source Code Pro", monospace;
+    margin: 10px 0;
+    /* Add margin to separate from other content */
+}
+
+code {
+    font-family: "Source Code Pro", monospace;
+    font-size: 14px;
 }

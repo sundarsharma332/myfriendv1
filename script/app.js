@@ -108,7 +108,7 @@ button.addEventListener('click', function () {
         }));
 
         // Send message to server via API
-        fetch('https://myfriendv1ws.vercel.app/api/message', {
+        fetch('http://localhost:4000/api/message', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -144,6 +144,7 @@ button.addEventListener('click', function () {
 });
 
 // Add chat bubble to the chat container
+// Add chat bubble to the chat container
 function addChatBubble(text, type, timestamp = new Date().toLocaleTimeString()) {
     const chatBubble = document.createElement('div');
     chatBubble.className = `chat-bubble ${type}`;
@@ -160,12 +161,35 @@ function addChatBubble(text, type, timestamp = new Date().toLocaleTimeString()) 
     chatContainer.appendChild(chatBubble);
 }
 
-// Format text for display
 function formatText(text) {
-    // Replace new lines with <br> tags
-    const formattedText = text.replace(/\n/g, '<br>');
+    // Handle code blocks wrapped in triple backticks
+    const codeBlockPattern = /```(?:\w+)?\n([\s\S]*?)```/g;
+    let formattedText = text.replace(codeBlockPattern, (match, code) => {
+        // Escape HTML entities in the code block
+        const escapedCode = escapeHTML(code.trim());
+        return `<pre><code>${escapedCode}</code></pre>`;
+    });
+
+    // Replace single new lines with <br> tags for the rest of the text
+    formattedText = formattedText.replace(/\n/g, '<br>');
+
     return formattedText;
 }
+
+// Escape HTML to prevent XSS attacks and improper rendering
+function escapeHTML(text) {
+    return text.replace(/[&<>"']/g, function (match) {
+        const escapeMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return escapeMap[match];
+    });
+}
+
 
 // Show loading indicator
 function showLoadingIndicator() {
