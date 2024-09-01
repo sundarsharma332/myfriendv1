@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
+:root {
+    --primary-color: #673AB7;
+    /* Default purple color */
+}
 
 body {
     margin: 0;
@@ -63,7 +67,7 @@ body {
 }
 
 .search-container textarea:focus {
-    border-color: #673AB7;
+    border-color: var(--primary-color);
 }
 
 .search-container button {
@@ -71,7 +75,7 @@ body {
     right: 16px;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #673AB7;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 50%;
@@ -90,13 +94,13 @@ body {
 }
 
 .search-container button:hover {
-    background-color: #5E35B1;
+    background-color: var(--primary-color);
 }
 
 .floating-circle {
     position: fixed;
     bottom: 20px;
-    background-color: #673AB7;
+    background-color: var(--primary-color);
     color: white;
     border-radius: 50%;
     width: 56px;
@@ -109,7 +113,7 @@ body {
 }
 
 .floating-circle:hover {
-    background-color: #5E35B1;
+    background-color: var(--primary-color);
 }
 
 .new-chat-circle {
@@ -143,7 +147,7 @@ body {
 .sidebar h2 {
     margin-top: 0;
     font-size: 24px;
-    color: #673AB7;
+    color: var(--primary-color);
 }
 
 .sidebar ul {
@@ -161,7 +165,7 @@ body {
 .history-item-title {
     font-size: 16px;
     font-weight: bold;
-    color: #673AB7;
+    color: var(--primary-color);
 }
 
 .history-item-timestamp {
@@ -184,7 +188,7 @@ body {
 
 .chat-bubble.question {
     align-self: flex-end;
-    background-color: #673AB7;
+    background-color: var(--primary-color);
     color: white;
     border-top-right-radius: 0;
 }
@@ -252,9 +256,9 @@ body {
 
 pre {
     background-color: black;
-    /* Light gray background */
+    /* Black background for code preview */
     color: #ffffff;
-    /* Dark text color */
+    /* White text color for code preview */
     padding: 20px;
     border-radius: 5px;
     overflow-x: auto;

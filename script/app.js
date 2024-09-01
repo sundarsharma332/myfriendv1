@@ -12,6 +12,41 @@ let currentSessionId = null;
 let messages = []; // Store chat history
 let isThinking = false; // Flag to indicate if the AI is thinking
 
+
+const prodURI = 'https://infeeai-self.vercel.app/api/ai/completion/message'
+const localURI = 'http://localhost:3000/api/ai/completion/message'
+
+
+const rainbowColors = [
+    { name: 'Dark Red', color: '#8B0000' },
+    { name: 'Dark Orange', color: '#FF4500' },
+    { name: 'Dark Goldenrod', color: '#B8860B' },
+    { name: 'Dark Green', color: '#006400' },
+    { name: 'Dark Blue', color: '#00008B' },
+    { name: 'Dark Slate Blue', color: '#483D8B' },
+    { name: 'Dark Violet', color: '#9400D3' }
+];
+
+function changeThemeColor(selectedColor) {
+    document.documentElement.style.setProperty('--primary-color', selectedColor);
+}
+
+// Populate the color picker dropdown
+const colorPicker = document.getElementById('theme-color');
+rainbowColors.forEach(color => {
+    const option = document.createElement('option');
+    option.value = color.color;
+    option.textContent = color.name;
+    colorPicker.appendChild(option);
+});
+
+// Attach event listener to the color picker
+colorPicker.addEventListener('change', function () {
+    const selectedColor = colorPicker.value;
+    changeThemeColor(selectedColor);
+});
+
+
 // Change placeholder text periodically
 function changePlaceholder() {
     textarea.placeholder = placeholders[placeholderIndex];
@@ -108,7 +143,7 @@ button.addEventListener('click', function () {
         }));
 
         // Send message to server via API
-        fetch('http://localhost:4000/api/message', {
+        fetch(prodURI, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
