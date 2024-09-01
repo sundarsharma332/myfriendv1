@@ -12,9 +12,11 @@ let currentSessionId = null;
 let messages = []; // Store chat history
 let isThinking = false; // Flag to indicate if the AI is thinking
 
+const env = "prod";
 
-const prodURI = 'https://infeeai-self.vercel.app/api/ai/completion/message'
-const localURI = 'http://localhost:3000/api/ai/completion/message'
+const url = env === "dev"
+    ? "http://localhost:3000/api/ai/completion/message"
+    : "https://infeeai-self.vercel.app/api/ai/completion/message";
 
 
 const rainbowColors = [
@@ -143,7 +145,7 @@ button.addEventListener('click', function () {
         }));
 
         // Send message to server via API
-        fetch(prodURI, {
+        fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
